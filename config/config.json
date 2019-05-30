@@ -1,0 +1,290 @@
+{
+    "host" : "http://localhost:8080",
+    "errorTileUrl" : "images/noTiled.png",
+    "positionImg" : "images/position.png",
+    "positionImgSize" : [20,20],
+    "attribute" : {
+		"name" : "2018@ienc",
+		"title" : "北京恒济引航科技股份有限公司",
+		"link" : "http://www.ienc.cn"
+    },
+    "center" : [39.917, 116.398],
+    "zoom" : 10,
+    "attributionControl"  : false,
+    "basemapsControl" : false ,
+    "scaleControl" : true,
+    "scalePosition" : "bottomleft",
+    "panControl" : true,
+    "panPosition" : "topleft",
+    "searchControl" : false,
+    "searchPosition" : "topleft",
+    "fullscreenControl" : true,
+    "fullscreenPosition" : "topright",
+    "zoomControl" : true,
+    "zoomPosition" : "topleft",
+    "zoomLevel" : {
+        "countryLevel" : 1,
+        "provinceLevel" : 5,
+        "cityLevel" : 10 ,
+        "streetLevel" : 13
+    },
+    "clearEasyButton" : true,
+    "menuButton" : true,
+    "navbarControl" : true,
+    "navbarPosition" : "topleft",
+    "mousePositionControl" : true,
+    "mousePosition" : "bottomleft",
+    "printerControl" : true,
+    "printerPosition" : "topleft",
+    "miniMapControl" : true,
+    "miniMapPosition" : "topleft",
+    "measureControl" : true,
+    "measurePosition" : "topright",
+    "magnifyingGlassControl" : false,
+    "magnifyingGlassPosition" : "topleft",
+    "businessData" : [
+        {
+            "name" : "项目",
+            "xhrUrl" : "/MongoServer/find?table=project&orderFiled=",
+            "icon" : "images/business/fengxian_2.png",
+            "iconSize" : [20,20],
+            "visible" : true,
+            "popupAnchor" : [0,0],
+            "type" : "point",
+            "clickItem" : {
+            	"url" : "/transport/riskregister/goView.do?ssoid=",
+            	"parameter" : {
+        			"id" : "id"
+            	}
+            },
+            "tooltip" : [
+            	{
+            		"name" : "",
+            		"field" : "amenity"
+            	},
+            	{
+            		"name" : "名称",
+            		"field" : "name"
+            	},
+            	{
+            		"name" : "类型",
+            		"field" : "typeName"
+            	}
+            ]
+        },{
+            "name" : "标段",
+            "xhrUrl" : "/MongoServer/find?table=partition&orderFiled=",
+            "icon" : "images/business/yinhuan_1.png",
+            "iconSize" : [20,20],
+            "visible" : true,
+            "popupAnchor" : [0,0],
+            "type" : "point",
+            "clickItem" : {
+            	"url" : "/transport/latentregister/goView.do?closeButtenType=0&ssoid=",
+            	"parameter" : {
+        			"id" : "id"
+            	}
+            },
+            "tooltip" : [
+            	{
+            		"name" : "",
+            		"field" : "amenity"
+            	},
+            	{
+            		"name" : "名称",
+            		"field" : "name"
+            	}
+            ]
+        },{
+            "name" : "项目分区",
+            "xhrUrl" : "/MongoServer/find?table=section&orderFiled=",
+            "icon" : "images/business/heidianico.png",
+            "iconSize" : [20,20],
+            "visible" : true,
+            "popupAnchor" : [0,0],
+            "type" : "point",
+            "clickItem" : {
+            	"url" : "/construct/accident/accidentStatistics/goView.do?ssoid=",
+            	"parameter" : {
+        			"id" : "id",
+        			"typeCode" : "typeCode"
+            	}
+            },
+            "tooltip" : [
+            	{
+            		"name" : "",
+            		"field" : "amenity"
+            	},
+            	{
+            		"name" : "名称",
+            		"field" : "name"
+            	}
+            ]
+        },{
+            "name" : "项目桩号",
+            "xhrUrl" : "/MongoServer/find?table=stakeMark&orderFiled=",
+            "icon" : "images/marker-icon.png",
+            "iconSize" : [12,20],
+            "visible" : true,
+            "popupAnchor" : [0,0],
+            "type" : "point",
+            "clickItem" : {
+            	"Distinguish" : {
+            		"field" : "type" ,
+            		"url" : {
+            			"item" : "/construct/item/libitem/goView.do?closeButtonType=1&ssoid=",
+            			"itemDetail" : "/construct/item/libdetail/goView.do?closeButtonType=1&ssoid="
+            		}
+            	},
+            	"url" : "/transport/riskregister/goView.do?ssoid",
+            	"parameter" : {
+        			"id" : "id"
+            	}
+            },
+            "tooltip" : [
+            	{
+            		"name" : "",
+            		"field" : "amenity"
+            	},
+            	{
+            		"name" : "名称",
+            		"field" : "name"
+            	}
+            ]
+        }
+    ],
+    "tiledLayers" : [
+        {
+            "name" : "天地图",
+            "attribute" : "",
+            "img" : "images/0.png",
+            "path" : "http://localhost/tianditu/{z}/{x}/{y}.png",
+            "pathOnLine" : "http://t1.tianditu.com/DataServer?T=cva_w&X={x}&Y={y}&L={z}&tk=174705aebfe31b79b3587279e211cb9a",
+            "pathOnLine1" : "http://t1.tianditu.com/DataServer?T=vec_w&X={x}&Y={y}&L={z}&tk=174705aebfe31b79b3587279e211cb9a",
+            "visible" : false,
+            "label" : "天地图",
+            "maxZoom" : 14,
+		    "minZoom" : 0
+        }
+    ],
+    "menuList" : [{
+        "ID":"dcfae3bd-1ecf-489f-954a-92b7377da367",
+        "functionID":"2e0076ec-cfc6-4001-bfd4-a6917ee125c5",
+        "img":"icon_ziyuanmulu02.png",
+        "name":"经纬度定位",
+        "menuId" : 1,
+        "roleID":"4f73c902-d2f9-43dc-99ac-fdb1cf4641ee"
+    },{
+        "ID":"a0458557-9eec-40c5-a497-404cd86d2e94",
+        "functionID":"74043E288A0840E5AD0008C748B18C66",
+        "img":"icon_xingquaihao02.png",
+        "name":"行政区查询",
+        "menuId" : 2,
+        "roleID":"4f73c902-d2f9-43dc-99ac-fdb1cf4641ee"
+    },{
+        "ID":"a0458557-9eec-40c5-a497-404cd86d2e94",
+        "functionID":"74043E288A0840E5AD0008C748B18C66",
+        "img":"icon_xingquaihao02.png",
+        "name":"地名查询",
+        "menuId" : 12,
+        "roleID":"4f73c902-d2f9-43dc-99ac-fdb1cf4641ee"
+    },{
+        "ID":"ba5b7010-52e9-47b4-b92e-55205f2fa3e0",
+        "functionID":"74043E288A0840E5AD0008C748B18C00",
+        "img":"icon_dimingdizhi02.png",
+        "name":"数据查询",
+        "menuId" : 3,
+        "roleID":"4f73c902-d2f9-43dc-99ac-fdb1cf4641ee"
+    },{
+        "ID":"0b90a502-22f2-43c1-8664-4b13e2a04376",
+        "functionID":"74043E288A0840E5AD0008C748B18CF8",
+        "img":"icon_tongjifenxi02.png",
+        "name":"要素标注",
+        "menuId" : 6,
+        "roleID":"4f73c902-d2f9-43dc-99ac-fdb1cf4641ee"
+    },{
+        "ID":"ebc6baaa-5f1f-4bd3-9097-54f54f9b920f",
+        "functionID":"74043E288A0840E5AD0008C748B18CEE",
+        "img":"icon_huanchongfenxi02.png",
+        "name":"缓冲分析",
+        "menuId" : 7,
+        "roleID":"4f73c902-d2f9-43dc-99ac-fdb1cf4641ee"
+    },{
+        "ID":"383da6c1-66d6-4fc1-93fa-674a614b997e",
+        "functionID":"5b7426b5-7edd-4849-903a-7ae4ae193d85",
+        "img":"icon_ditusousuo02.png",
+        "name":"聚合分析",
+        "menuId" : 4,
+        "roleID":"4f73c902-d2f9-43dc-99ac-fdb1cf4641ee"
+    },{
+        "ID":"08d00944-c8ea-4ca8-8d98-ea3d49db4f9a",
+        "functionID":"04189da7-5d99-451f-bbdf-92e6df2da468",
+        "img":"icon_shishifenxi02.png",
+        "name":"热度分析",
+        "menuId" : 5,
+        "roleID":"4f73c902-d2f9-43dc-99ac-fdb1cf4641ee"
+    },{
+        "ID":"7d8f6e60-d61a-4f87-a326-0757652dcbd8",
+        "functionID":"74043E288A0840E5AD0008C748B18C78",
+        "img":"icon_gerenzhuanti02.png",
+        "name":"综合分析",
+        "menuId" : 8,
+        "roleID":"4f73c902-d2f9-43dc-99ac-fdb1cf4641ee"
+    },{
+        "ID":"08d00944-c8ea-4ca8-8d98-ea3d49db4f9sxsx",
+        "functionID":"04189da7-5d99-451f-bbdf-92e6df2da46ss",
+        "img":"icon_shishifenxi02.png",
+        "name":"实时数据",
+        "menuId" : 10,
+        "roleID":"4f73c902-d2f9-43dc-99ac-fdb1cf4641ee"
+    },{
+        "ID":"08d00944-c8ea-4ca8-8d98-ea3d49db4f9sxsx",
+        "functionID":"04189da7-5d99-451f-bbdf-92e6df2da46ss",
+        "img":"icon_shishifenxi02.png",
+        "name":"统计上图",
+        "menuId" : 11,
+        "roleID":"4f73c902-d2f9-43dc-99ac-fdb1cf4641ee"
+    },{
+        "ID":"08d00944-c8ea-4ca8-8d98-ea3d49db4f9sxe",
+        "functionID":"04189da7-5d99-451f-bbdf-92e6deda46ss",
+        "img":"icon_shishifenxi02.png",
+        "name":"三维场景",
+        "menuId" : 13,
+        "roleID":"4f73c902-d2f9-43dc-99ac-fdb1cf4641ee"
+    }],
+    "provinceCenter" : {
+    	"安徽省" : [117.22613,31.825898],
+    	"北京市" : [116.409855,40.184963],
+    	"福建省" : [117.98321,26.080008],
+    	"甘肃省" : [100.932592,37.823085],
+    	"广东省" : [113.420839,23.342929],
+    	"广西壮族自治区" : [108.78554,23.829875],
+    	"贵州省" : [106.87423,26.815016],
+    	"海南省" : [109.744492,19.189492],
+    	"河北省" : [116.126507,39.547994],
+    	"河南省" : [113.613723,33.88189],
+    	"黑龙江省" : [127.763019,47.861326],
+    	"湖北省" : [112.268664,30.975877],
+    	"湖南省" : [111.708412,27.607033],
+    	"吉林省" : [126.192936,43.665407],
+    	"江苏省" : [119.443211,32.976137],
+    	"江西省" : [115.720495,27.613204],
+    	"辽宁省" : [122.608639,41.296216],
+    	"内蒙古自治区" : [113.910095,44.086089],
+    	"宁夏回族自治区" : [106.164763,37.271668],
+    	"青海省" : [96.004248,35.74904],
+    	"山东省" : [118.138899,36.334533],
+    	"山西省" : [112.292211,37.575462],
+    	"陕西省" : [108.870703,35.195526],
+    	"上海市" : [121.419783,31.184516],
+    	"四川省" : [102.710389,30.615609],
+    	"台湾省" : [120.965915,23.750021],
+    	"天津市" : [117.329206,39.311865],
+    	"西藏自治区" : [88.440052,31.492691],
+    	"香港特别行政区" : [114.134162,22.382162],
+    	"新疆维吾尔自治区" : [85.183889,41.11724],
+    	"云南省" : [101.487739,24.975803],
+    	"浙江省" : [120.078912,29.175621],
+    	"重庆市" : [107.875052,30.058336]
+    }
+}
