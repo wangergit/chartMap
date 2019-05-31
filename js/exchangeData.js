@@ -301,9 +301,7 @@ function syncGetData(name,url,callback){
 function getOptionsContent(html){
 	html += '<option value="">---请选择数据类型---</option>';
     for(var i = 0 ; i < config.businessData.length ; i ++){
-        if(config.businessData[i].type == "point"){
-            html += '<option value="' + config.businessData[i].name + '">' + config.businessData[i].name + '</option>';
-        }
+        html += '<option value="' + config.businessData[i].table + '">' + config.businessData[i].name + '</option>';
     }
     return html;
 }

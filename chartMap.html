@@ -45,6 +45,9 @@
 	    var posObj = '';
 		//jQuery.ajaxSetup({cache: true}); //jquery缓存页面 
 	    window.onload = function(){
+            $(document).bind("contextmenu",function(e){ 
+                return false; 
+            }); 
 	    	getConfig();
 		}	
 	</script>

@@ -644,6 +644,23 @@ function getBusinessData(){
         //overlayMaps["<span class='basinessSpan' style='background-image:url(" + config.businessData[i].icon + ")'></span>" + config.businessData[i].name] = L.geoJson(results,geojsonOpts)
         overlayMaps[config.businessData[i].name] = layer;
         poiLayers.addLayer(layer);
+        layer.on('click contextmenu',function(feature){
+            if(confirm("确定删除此项目范围？")){
+                var table = feature.target.options.tableName;
+                var item = feature.layer.toGeoJSON();
+				$.post("/MongoServer/delete",{
+                    table : table,
+                    key : "properties.id",
+                    value : item.properties.id
+                },function(result){
+                    if(JSON.parse(result).data > 0){
+                        alert("删除成功！");
+                    }else{
+                        alert("删除失败！");
+                    }
+                });
+            }
+        });
         layer.on("click",function(feature){
             if(!spaceMaintenance){
                 return
@@ -766,6 +783,7 @@ function saveEdit(){
     }
     if(confirm("确认维护22222下的" + editLayer.options.layerName + "信息吗？")){
         editLayer.disableEdit();
+        editLayer.redraw();
         $.post("/MongoServer/update",{
             table : editLayer.options.tableName,
             update : JSON.stringify(editLayer.toGeoJSON().geometry.coordinates),

@@ -44,13 +44,14 @@
     "magnifyingGlassPosition" : "topleft",
     "businessData" : [
         {
-            "name" : "项目",
+            "name" : "项目范围",
             "xhrUrl" : "/MongoServer/find?table=project&orderFiled=",
             "icon" : "images/business/fengxian_2.png",
             "iconSize" : [20,20],
             "visible" : true,
             "popupAnchor" : [0,0],
             "type" : "point",
+            "table" : "project",
             "clickItem" : {
             	"url" : "/transport/riskregister/goView.do?ssoid=",
             	"parameter" : {
@@ -72,13 +73,14 @@
             	}
             ]
         },{
-            "name" : "标段",
+            "name" : "项目标段",
             "xhrUrl" : "/MongoServer/find?table=partition&orderFiled=",
             "icon" : "images/business/yinhuan_1.png",
             "iconSize" : [20,20],
             "visible" : true,
             "popupAnchor" : [0,0],
             "type" : "point",
+            "table" : "partition",
             "clickItem" : {
             	"url" : "/transport/latentregister/goView.do?closeButtenType=0&ssoid=",
             	"parameter" : {
@@ -103,6 +105,7 @@
             "visible" : true,
             "popupAnchor" : [0,0],
             "type" : "point",
+            "table" : "section",
             "clickItem" : {
             	"url" : "/construct/accident/accidentStatistics/goView.do?ssoid=",
             	"parameter" : {
@@ -128,6 +131,7 @@
             "visible" : true,
             "popupAnchor" : [0,0],
             "type" : "point",
+            "table" : "stakeMark",
             "clickItem" : {
             	"Distinguish" : {
             		"field" : "type" ,

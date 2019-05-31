@@ -85,13 +85,38 @@ function drawItemTrigger(feature){
             $("#bufferItem")[0].value = JSON.stringify(feature.toGeoJSON());
         }
     }else {//保存要素
-    	var tmpjsonStr = feature.toGeoJSON();
-		var index = parent.layer.getFrameIndex(wname);
-		var body = parent.layer.getChildFrame('body', index);
-		body.contents().find("#" + posObj).val(tmpjsonStr);
-		console.log(tmpjsonStr);
-		index = parent.layer.getFrameIndex(window.name); // 先得到当前iframe层的索引
-		parent.layer.close(index); // 再执行关闭
+    	var saveFeatureJson = feature.toGeoJSON();
+		if(confirm("是否新增项目？")){
+			bufferState = false;//缓冲区状态恢复
+			if(windowControl){
+				map.removeControl(windowControl);
+				windowControl = null;
+			}
+			var html = '<select id="businessSelect" data-toggle="select" class="select-info mrs mbm select2-container form-control select " style="background-color: #007bff;color: white;">';
+            html = getOptionsContent(html);
+            html += '</select>';
+            html += '<button type="button" class="btn btn-primary" id="saveFeatureBtn">保存</button>';
+            windowControl = L.control.window("map",{
+                visible : true,
+                title : "新增项目",
+                content : html
+			});
+			$("#saveFeatureBtn")[0].onclick = function(){
+				var table = $("#businessSelect")[0].value;
+				if(saveFeatureJson && table){
+					$.post("/MongoServer/save",{
+						table : table,
+						save : JSON.stringify(saveFeatureJson)
+					},function(result){
+						if(JSON.parse(result).data == "success"){
+							alert("保存成功！");
+						}else{
+							alert("保存失败！");
+						}
+					});
+				}
+			};
+		}
     }
 }
 
