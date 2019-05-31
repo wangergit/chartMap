@@ -350,6 +350,7 @@
 	}
 .leaflet-control-layers .leaflet-control-layers-list,
 .leaflet-control-layers-expanded .leaflet-control-layers-toggle {
+	text-align: left;
 	display: none;
 	}
 .leaflet-control-layers-expanded .leaflet-control-layers-list {

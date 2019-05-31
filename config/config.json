@@ -189,6 +189,13 @@
         "menuId" : 12,
         "roleID":"4f73c902-d2f9-43dc-99ac-fdb1cf4641ee"
     },{
+        "ID":"08d00944-c8ea-4ca8-8d98-ea3d49d4f9sxsx",
+        "functionID":"04189da7-5d99-451f-bbdf-92e6df2da46ss",
+        "img":"icon_shishifenxi02.png",
+        "name":"空间维护",
+        "menuId" : 15,
+        "roleID":"4f73c902-d2f9-43dc-99ac-fdb1cf4641ee"
+    },{
         "ID":"ba5b7010-52e9-47b4-b92e-55205f2fa3e0",
         "functionID":"74043E288A0840E5AD0008C748B18C00",
         "img":"icon_dimingdizhi02.png",
@@ -217,39 +224,11 @@
         "menuId" : 4,
         "roleID":"4f73c902-d2f9-43dc-99ac-fdb1cf4641ee"
     },{
-        "ID":"08d00944-c8ea-4ca8-8d98-ea3d49db4f9a",
-        "functionID":"04189da7-5d99-451f-bbdf-92e6df2da468",
-        "img":"icon_shishifenxi02.png",
-        "name":"热度分析",
-        "menuId" : 5,
-        "roleID":"4f73c902-d2f9-43dc-99ac-fdb1cf4641ee"
-    },{
-        "ID":"7d8f6e60-d61a-4f87-a326-0757652dcbd8",
-        "functionID":"74043E288A0840E5AD0008C748B18C78",
-        "img":"icon_gerenzhuanti02.png",
-        "name":"综合分析",
-        "menuId" : 8,
-        "roleID":"4f73c902-d2f9-43dc-99ac-fdb1cf4641ee"
-    },{
         "ID":"08d00944-c8ea-4ca8-8d98-ea3d49db4f9sxsx",
         "functionID":"04189da7-5d99-451f-bbdf-92e6df2da46ss",
         "img":"icon_shishifenxi02.png",
         "name":"实时数据",
         "menuId" : 10,
-        "roleID":"4f73c902-d2f9-43dc-99ac-fdb1cf4641ee"
-    },{
-        "ID":"08d00944-c8ea-4ca8-8d98-ea3d49db4f9sxsx",
-        "functionID":"04189da7-5d99-451f-bbdf-92e6df2da46ss",
-        "img":"icon_shishifenxi02.png",
-        "name":"统计上图",
-        "menuId" : 11,
-        "roleID":"4f73c902-d2f9-43dc-99ac-fdb1cf4641ee"
-    },{
-        "ID":"08d00944-c8ea-4ca8-8d98-ea3d49db4f9sxe",
-        "functionID":"04189da7-5d99-451f-bbdf-92e6deda46ss",
-        "img":"icon_shishifenxi02.png",
-        "name":"三维场景",
-        "menuId" : 13,
         "roleID":"4f73c902-d2f9-43dc-99ac-fdb1cf4641ee"
     }],
     "provinceCenter" : {

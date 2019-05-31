@@ -27,57 +27,9 @@ var overlayMaps = {}; //全局图层对象声明
 var MapSearchControl = null;
 var echartsLegend = null; 
 var windowControl = null ;//弹出框
-
-
-
-//自定义标记图标
-var iconOption={
-    iconUrl: '/authentic/static/gis/images/marker-icon.png',
-    iconRetinaUrl: '/authentic/gis/images/marker-icon-2x.png',
-    shadowUrl: '/authentic/gis/images/marker-shadow.png',
-    shadowRetinaUrl: '/authentic/gis/images/marker-shadow.png',
-    iconSize: [12, 16],
-    iconAnchor: [6, 16],
-    shadowSize: [16, 16],
-    shadowAnchor: [6,16],
-    popupAnchor: [0, 0]
-}
-var favIconOption={},riskIconOption={},latentIconOption={},accidentIconOption={},itemIconOption={},itemDetailIconOption={},skyboxIconOption={};
-$.extend(favIconOption,iconOption);
-$.extend(riskIconOption,iconOption);
-$.extend(latentIconOption,iconOption);
-$.extend(accidentIconOption,iconOption); 
-$.extend(itemIconOption,iconOption);
-$.extend(itemDetailIconOption,iconOption);
-$.extend(skyboxIconOption,iconOption);
-//兴趣点ICON
-favIconOption.iconUrl='/authentic/static/gis/images/fav-icon.png';
-favIconOption.iconRetinaUrl='/authentic/static/gis/images/fav-icon-2x.png'; 
-//项目ICON
-riskIconOption.iconUrl='/authentic/static/gis/images/proj-icon0.png';
-riskIconOption.iconRetinaUrl='/authentic/static/gis/images/proj-icon0-2x.png';    
-latentIconOption.iconUrl='/authentic/static/gis/images/proj-icon1.png';
-latentIconOption.iconRetinaUrl='/authentic/static/gis/images/proj-icon1-2x.png';    
-accidentIconOption.iconUrl='/authentic/static/gis/images/proj-icon2.png';
-accidentIconOption.iconRetinaUrl='/authentic/static/gis/images/proj-icon2-2x.png';
-itemIconOption.iconUrl='/authentic/static/gis/images/proj-icon3.png';
-itemIconOption.iconRetinaUrl='/authentic/static/gis/images/proj-icon3-2x.png'; 
-itemDetailIconOption.iconUrl='/authentic/static/gis/images/proj-icon4.png';
-itemDetailIconOption.iconRetinaUrl='/authentic/static/gis/images/proj-icon4-2x.png';    
-skyboxIconOption.iconUrl='/authentic/static/gis/images/skybox-icon.png';
-skyboxIconOption.iconRetinaUrl='/authentic/static/gis/images/skybox-icon-2x.png';     
-var markerIcon = L.icon(iconOption);
-var favIcon = L.icon(favIconOption);
-var riskIcon = L.icon(riskIconOption);
-var latentIcon = L.icon(latentIconOption);
-var accidentIcon = L.icon(accidentIconOption);  
-var emergencyIcon = L.icon(favIconOption); 
-var itemIcon = L.icon(itemIconOption); 
-var itemDetailIcon = L.icon(itemDetailIconOption); 
-var skyboxIcon = L.icon(skyboxIconOption);
-
-
-
+var editLayer = null;
+var editGeoJson = null;
+var spaceMaintenance = false;
 
 /**
  * 初始化地图组件
@@ -91,32 +43,19 @@ function initMap(data){
 
     //创建地图组件
     map = new L.Map('map' ,{
+        editable: true,
         zoomControl: false ,//缩放控件
         attributionControl : false,//属性控件
-        //layers : basemaps
+        contextmenu: false,
+        contextmenuWidth: 140,
+        contextmenuItems: [{
+            text: 'Center',
+            callback: function(){}
+        }]
     });
     for(var i = 0 ; i < config.tiledLayers.length ; i ++){
-    	if(config.tiledLayers[i].cache){//arcgis切片格式
-            // loadScript("js/L.tileLayer.tileLoad.js",function(){})
-            // tiles = new L.TileLayer.TileLoad(config.tiledLayers[i].path, {
-            //     label : config.tiledLayers[i].label,
-            //     maxZoom : config.tiledLayers[i].maxZoom,
-            //     minZoom : config.tiledLayers[i].minZoom,
-            //     errorTileUrl : config.errorTileUrl,
-            //     continuousWorld: true,
-            //     visible : config.tiledLayers[i].visible
-            // }).addTo(map);
-        }else{
-        	if(online){
-        		new L.tileLayer(config.tiledLayers[i].pathOnLine1, {
-                    label : config.tiledLayers[i].label,
-                    maxZoom : config.tiledLayers[i].maxZoom,
-                    minZoom : config.tiledLayers[i].minZoom,
-                    errorTileUrl : config.errorTileUrl,
-                    visible : config.tiledLayers[i].visible
-                }).addTo(map);
-        	}
-            tiles = new L.tileLayer(online?config.tiledLayers[i].pathOnLine:config.tiledLayers[i].path, {
+    	if(online){
+            new L.tileLayer(config.tiledLayers[i].pathOnLine1, {
                 label : config.tiledLayers[i].label,
                 maxZoom : config.tiledLayers[i].maxZoom,
                 minZoom : config.tiledLayers[i].minZoom,
@@ -124,6 +63,13 @@ function initMap(data){
                 visible : config.tiledLayers[i].visible
             }).addTo(map);
         }
+        tiles = new L.tileLayer(online?config.tiledLayers[i].pathOnLine:config.tiledLayers[i].path, {
+            label : config.tiledLayers[i].label,
+            maxZoom : config.tiledLayers[i].maxZoom,
+            minZoom : config.tiledLayers[i].minZoom,
+            errorTileUrl : config.errorTileUrl,
+            visible : config.tiledLayers[i].visible
+        }).addTo(map);
         basemaps.push(tiles);
     }
     //书签
@@ -575,6 +521,25 @@ function menuClick(menuId){
 				content: "/authentic/webgis/panorama.do?imgType="+imgType+"&fileId="+this.options.fileId,
 				area: ['807px', '460px']
 			});
+            break;
+        case 15://空间维护
+            if(spaceMaintenance){
+                spaceMaintenance = false;
+                if(editLayer){
+                    editLayer.disableEdit();
+                }
+            }else{
+                spaceMaintenance = true;
+                html = '请先点击需要维护的图层进行编辑后，点击下方保存按钮<br/>';
+                html += '<button type="button" class="btn btn-primary" id="saveEditBtn" style="margin-top: 20px;margin-right:20px;">保存</button>';
+                html += '<button type="button" class="btn btn-primary" id="" style="margin-top: 20px;">重置</button>';
+                windowControl = L.control.window("map",{
+                    visible : true,
+                    title : "空间维护",
+                    content : html
+                });
+                $("#saveEditBtn")[0].onclick = saveEdit;
+            }
         	break;
         default:
             break;
@@ -629,37 +594,71 @@ function getBusinessData(){
     for(var i = 0 ; i < config.businessData.length ; i ++){
     	var tooltip = config.businessData[i].tooltip ? config.businessData[i].tooltip : [];
         var geojsonOpts = {
+            editable: true,
+            tableName : config.businessData[i].xhrUrl.split("table=")[1].split("&")[0],
+            layerName : config.businessData[i].name,
             pointToLayer : function(feature, latlng) {
                 var myIcon = L.icon({
                     iconUrl: config.businessData[i].icon,
                     iconSize : config.businessData[i].iconSize,
                     popupAnchor : config.businessData[i].popupAnchor
                 });
+            	return L.marker(latlng, {
+                    icon : myIcon
+                });
+            },
+            onEachFeature : function(feature,layer){//遍历图层要素，适合添加点击事件或弹出框
                 var str = "";
             	for (var int = 0; int < tooltip.length; int++) {
             		str += (int > 0 ? "</br>" : "") + tooltip[int].name + (tooltip[int].name?":":"") + disposeString(feature.properties[tooltip[int].field]);
-				}
-            	return L.marker(latlng, {
-                    icon : myIcon
-                }).bindTooltip(str);
+                }
+                layer.bindTooltip(str)
             },
             style : function (feature) {
+                switch (feature.properties.type) {//按照字段属性来符号渲染
+                    case "1":
+                        return {
+                            color: '#FF0000',
+                            fillColor: '#FF0000',
+                            fillOpacity: 0.3,
+                            //weight: 2,
+                            //dashArray: '10'
+                        };
+                    case "2":
+                        return {
+                            color: '#0000ff',
+                            fillColor: '#0000ff',
+                            fillOpacity: 0.3
+                        };
+                }
                 return {
-                    color: '#FF0000',
-                    fillColor: '#FF0000',
-                    fillOpacity: 0.3,
-                    //weight: 2,
-                    //dashArray: '10'
+                    color: '#0000ff',
+                    fillColor: '#0000ff',
+                    fillOpacity: 0.3
                 };
             }
         };
         var results = syncGetData("",config.host + config.businessData[i].xhrUrl);
         var layer = L.geoJson(results,geojsonOpts);
+        layer.editable = true;
         //overlayMaps["<span class='basinessSpan' style='background-image:url(" + config.businessData[i].icon + ")'></span>" + config.businessData[i].name] = L.geoJson(results,geojsonOpts)
         overlayMaps[config.businessData[i].name] = layer;
         poiLayers.addLayer(layer);
         layer.on("click",function(feature){
-        	clickLayerFeature(feature);
+            if(!spaceMaintenance){
+                return
+            }
+            if(editLayer && editLayer != feature.layer){
+                editLayer.disableEdit();
+            }
+            editLayer = feature.layer;
+            if(feature.layer.editEnabled()){
+                feature.layer.disableEdit()
+            }else{
+                editGeoJson = feature.layer.toGeoJSON();
+                feature.layer.enableEdit();
+            }
+        	//clickLayerFeature(feature);
         });
     }
     var baseMaps = {};
@@ -737,9 +736,9 @@ function clearMap(){
     }
     if(drawnItems) drawnItems.clearLayers();
     if(plotLayer) plotLayer.clearLayers();
-    map.eachLayer(function(item,index){
-		if(item._path) item.remove();
-	});
+    // map.eachLayer(function(item,index){
+	// 	if(item._path) item.remove();
+	// });
     if(MapSearchControl){
 		map.removeControl(MapSearchControl);
 		MapSearchControl.remove();
@@ -755,6 +754,31 @@ function clearMap(){
 function resizePage(){
     var pageSize = windowSize();
     $("#videoDock")[0] && ($("#videoDock")[0].style.top = (pageSize.windowHeight - 100) + "px");
+}
+
+/**
+ * 保存编辑后的数据
+ */
+function saveEdit(){
+    if(!editLayer){
+        alert("请先进行数据编辑！");
+        return
+    }
+    if(confirm("确认维护22222下的" + editLayer.options.layerName + "信息吗？")){
+        editLayer.disableEdit();
+        $.post("/MongoServer/update",{
+            table : editLayer.options.tableName,
+            update : JSON.stringify(editLayer.toGeoJSON().geometry.coordinates),
+            key : "properties.id",
+            value : editLayer.toGeoJSON().properties.id
+        },function(result){
+            if(JSON.parse(result).data == "success"){
+                alert("保存成功！");
+            }else{
+                alert("保存失败！");
+            }
+        });
+    }
 }
 
 //getConfig()//初始化
